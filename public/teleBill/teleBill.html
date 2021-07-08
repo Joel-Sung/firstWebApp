@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js'></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.js'></script>
+
+    <head>
+        <title>Telegram Bill</title>
+        
+        <link rel='stylesheet' type='text/css' href='./teleBillStyle.css'>
+
+        <script type='text/javascript' src='./../setup.js'></script>
+    </head>
+
+    <body>
+
+        <div class='main-Container' ng-app='teleBillApp' ng-controller='teleBillCtrl'>
+
+            <div ng-show='eventStep' class='event-Container'>
+                <p>
+                Ensure that you have arrived here through telegram bot 'Botsu'.<br>
+                Make sure you get the link from a telegram group with at least one admin.
+                </p><br>
+                Event Name:<br> <input type='text' ng-model='eventName'><br>
+                Event Date:<br> <input type='date' ng-model='eventDate'><br>
+                <button ng-click='goParticipants()'>Continue</button><br>
+                <p ng-show='loadingParticipants' style='font-size: large;'>Loading...</p>
+            </div>
+
+            <div ng-show='participantsStep' class='participants-Container'>
+                Number of participants:<br>
+                (Admins in the telegram group are automatically added.)<br>
+                <input type='number' ng-model='participantCount' max='50' limit-to-max><br>
+                <button ng-click='listParticipants()'>Confirm</button><br>
+                <div ng-show='participantsList'>
+                    <br>
+                    <p>!!! Use telegram handles !!!</p><br>
+                    <br>
+                    <div class='list'>
+                        <div ng-repeat='p in participants'>
+                            Participant {{ $index }}: <input type='text' ng-model='participants[$index].name'>
+                        </div>
+                    </div>
+                    <button ng-click='goModes()'>Continue</button>
+                </div>
+            </div>
+
+            <div ng-show='modesStep' class='modes-Container'>
+                <button ng-click='goTotalBill()'>Split by total bill</button><br>
+                <p>Split the bill evenly amongst participants.</p><br><br>
+                <button ng-click='goItemsBought()'>Split by items bought</button><br>
+                <p>Split the bill based on what each participant bought.</p>
+            </div>
+
+            <div ng-show='totalBillMode' class='totalBillMode-Container'>
+                Total bill:<br> $<input type='number' ng-model='totalBill' step='0.1' currency><br><br>
+                <p>Do you want to add on the following?</p><br><br>
+                <input type='checkbox' ng-model='gst'> 7% GST<br>
+                <input type='checkbox' ng-model='serviceCharge'> 10% Service Charge<br>
+                <button ng-click='goTotalBillFinal()'>Continue</button>
+            </div>
+
+            <div ng-show='totalBillFinal' class='totalBillFinal-Container'>
+                <p>Event Name: {{ eventName }}</p><br>
+                <p>Event Date: {{ eventDate | date }}</p><br>
+                <p>Total bill: {{ totalBill | currency }}</p><br><br>
+                <p ng-show='gst'>~Added 7% GST~<br></p>
+                <p ng-show='serviceCharge'>~Added 10% Service Charge~<br><br></p>
+                <p>Final bill: </p><br><br>
+                <div class='list'>
+                    <div ng-repeat='p in participants'>
+                        {{ participants[$index].name }} owes {{ splitBill | currency }}
+                    </div>
+                </div><br>
+                <button ng-click='teleMsg()'>Send telegram message</button>
+            </div>
+
+            <div ng-show='itemsBoughtMode' class='itemsBoughtMode-Container'>
+                <p>Key in the items bought.</p>
+                <table>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Item Cost</th>
+                    </tr>
+                    <tr ng-repeat='item in items'>
+                        <td><input type='text' ng-model='items[$index].name'></td>
+                        <td>$<input type='number' ng-model='items[$index].cost' step='.1' currency></td>
+                    </tr>
+                </table>
+                <button ng-click='newItem()'>Add Item</button><br><br>
+                <button ng-click='goSplitItemsStep()'>Continue</button>
+            </div>
+
+            <div ng-show='splitItemsStep' class='splitItems-Container'>
+                <p>Enter the items that each participant bought.</p><br><br>
+                Search for participant: <input type='text' ng-model='participantName'><br> 
+                <div>
+                    <div ng-repeat='p in participants | filter:participantName'>
+                        {{ p.name }} owes {{ p.pay | currency }}
+                        <table>
+                            <tr>
+                                <th>Item Name</th>
+                                <th>Amount bought</th>
+                                <th ng-if='!p.addingItem'><button ng-click='addItem($index)'>Add item</button></th>
+                                <th ng-if='p.addingItem'><button ng-click='cancelAddItem($index)'>Cancel</button></th>
+                            </tr>
+                            <tr ng-show='p.addingItem'>
+                                <td class='searchBar'>
+                                    <input type='text' ng-model='p.newItemName'>
+                                    <div class='dropDown'>
+                                        <ul>
+                                            <li ng-repeat='i in items | filterBy:p.newItemName' ng-click='dropDownSelect($parent.$index, i.name)'>
+                                                {{ i.name }}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+                                <td><input type='number' ng-model='p.newItemCount' whole-number></td>
+                                <td><button ng-click='confirmItem($index, p.newItemName, p.newItemCount)'>Add</button></td>
+                            </tr>
+                            <tr ng-repeat='item in p.bought | orderBy:"item.name"'>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.count }}</td>
+                                <td><button ng-click='editItem($parent.$index, $index)'>Edit</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <button ng-click='goSplitItemsAddOns()'>Continue</button>
+            </div>
+
+            <div ng-show='splitItemsAddOns' class='splitItemsAddOns-Container'>
+                Delivery Cost (Split among all participants):<br> $<input type='number' ng-model='deliveryCost' ng-step='0.1' currency><br><br>
+                <p>Do you want to add on the following?</p><br><br>
+                <input type='checkbox' ng-model='gst'> 7% GST<br>
+                <input type='checkbox' ng-model='serviceCharge'> 10% Service Charge<br><br>
+                <button ng-click='goSplitItemsFinal()'>Continue</button>
+            </div>
+
+            <div ng-show='splitItemsFinal' class='splitItemsFinal-Container'>
+                Event Name: {{ eventName }}<br>
+                Event Date: {{ eventDate | date }}<br>
+                Delivery Cost: {{ deliveryCost | currency }}<br><br>
+                <p ng-show='gst'>~Added 7% GST~<br></p> 
+                <p ng-show='serviceCharge'>~Added 10% Service Charge~<br><br></p>
+                <p style='background-color: blanchedalmond;'>Items bought: </p><br><br>
+                <div class='list'>
+                    <div ng-repeat='item in items'>
+                        <p style='background-color: aquamarine;'>{{ item.name }}</p> {{ item.cost | currency }} x{{ item.count }}
+                    </div>
+                </div><br>
+                <p style='background-color: blanchedalmond;'>Participants: </p><br><br>
+                <div class='list'>
+                    <div ng-repeat='p in participants'>
+                        <p style='background-color: aquamarine;'>{{ p.name }} owes {{ p.pay | currency }}</p><br>
+                        Bought:<br>
+                        <div ng-repeat='item in p.bought'>
+                            {{ item.name }} x{{ item.count }}
+                        </div>
+                    </div>
+                </div><br>
+                <button ng-click='teleMsg()'>Send telegram message</button>
+            </div>
+
+            <button ng-click='back()' ng-show='!eventStep'>Back</button>
+
+        </div>
+    
+        <script type='text/javascript' src='./teleBillCtrl.js'></script>
+
+    </body>
+</html>

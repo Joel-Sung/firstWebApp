@@ -1,0 +1,83 @@
+.newGame-Container.ng-hide-add,
+.names-Container.ng-hide-add,
+.rollDice-Container.ng-hide-add,
+.physicalDice-Container.ng-hide-add,
+.chooseFeng-Container.ng-hide-add,
+.setTai-Container.ng-hide-add {
+    animation: 0.5s fade-out;
+}
+.newGame-Container.ng-hide-remove,
+.names-Container.ng-hide-remove,
+.rollDice-Container.ng-hide-remove,
+.physicalDice-Container.ng-hide-remove,
+.chooseFeng-Container.ng-hide-remove,
+.setTai-Container.ng-hide-remove {
+    animation: 1s fade-in;
+}
+@keyframes fade-out {
+    from { opacity: 1; transform: scale(1,1); }
+    to   { opacity: 0; transform: scale(10,10); }
+}
+@keyframes fade-in {
+    0% { opacity: 0; transform: scale(10,10); }
+    50%   { opacity: 0; transform: scale(10,10); }
+    100%   { opacity: 1; transform: scale(1,1); }
+}
+
+.view-animate.ng-leave {
+    animation: 0.5s fade-out;
+    position: absolute;
+}
+.view-animate.ng-enter {
+    animation: 1s fade-in;
+    position: absolute;
+}
+
+.mainGame-Container.ng-hide-remove {
+    animation: 1s left-in;
+    position: absolute;
+}
+.statsPage-Container.ng-hide-add {
+    animation: 1s right-out;
+    position: absolute;
+}
+.statsPage-Container.ng-hide-remove {
+    animation: 1s right-in;
+    position: absolute; 
+}
+
+@keyframes left-out {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(-100%); }
+}
+@keyframes left-in {
+    from { opacity: 0; transform: translateX(-100%); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes right-out {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(100%); }
+}
+@keyframes right-in {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.chart.ng-hide-add {
+    animation: 0.5s fade-out-no-zoom;
+    position: absolute;
+}
+.chart.ng-hide-remove {
+    animation: 1s fade-in-no-zoom;
+    position: absolute;
+}
+
+@keyframes fade-out-no-zoom {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+}
+@keyframes fade-in-no-zoom {
+    0% { opacity: 0; }
+    50%   { opacity: 0; }
+    100%   { opacity: 1; }
+}

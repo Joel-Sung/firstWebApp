@@ -1,0 +1,144 @@
+<div class='statsPage-Container'>
+
+    <h3>Match statistics</h3>
+    <p>Total rounds played: {{ totalRounds }}</p>
+
+    <h3>Net loss / gain</h3>
+    <canvas id='netChart' class='chart'></canvas><br>
+
+    <h3>台 won by each player</h3>
+    <canvas id='taiChart' class='chart'></canvas><br>
+
+    <h3>Wins breakdown</h3>
+    <div class='twoByTwo wins'>
+        <div ng-repeat='player in playerData'>
+            <div ng-class='playerColors[$index]'>
+                <p>{{ player.name }}</p><br>
+                <p>Earnings from wins: {{ player.winWinnings | currency }}</p>
+                <table>
+                    <tr>
+                        <th>Shooter</th>
+                        <th ng-repeat='tai in player.wins[0] track by $index'>
+                            <p ng-if='$index < 4'>{{ $index + 1 }} 台</p>
+                            <p ng-if='$index === 4'>满 台</p>
+                            <p ng-if='$index === 5'>Total</p>
+                        </th>
+                    </tr>
+                    <tr ng-repeat='otherPlayer in playerData'>
+                        <td ng-if='$index !== $parent.$index'>{{ otherPlayer.name }}</td>
+                        <td ng-if='$index === $parent.$index'>自摸</td>
+                        <td ng-repeat='wins in player.wins[$index] track by $index'>
+                            {{ wins }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td ng-repeat='wins in player.wins[4] track by $index'>
+                            {{ wins }}
+                        </td>
+                        <td>
+                            {{player.wins[5] }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div><br>
+
+    <h3>庄家 wins</h3>
+    <div style='position: relative;'>
+        <canvas id='diaoZhengChart' class='chart'></canvas><br>
+        <p class='totalDiaoZheng'>
+            Total:<br>
+            {{ diaoZheng[0] + diaoZheng[1] + diaoZheng[2] + diaoZheng[3] }}
+        </p>
+    </div>
+    
+
+    <h3>How many times other players took your flower</h3>
+    <div class='flowerCharts'>
+        <canvas id='flower0' class='chart'></canvas>
+        <canvas id='flower1' class='chart'></canvas>
+        <canvas id='flower2' class='chart'></canvas>
+        <canvas id='flower3' class='chart'></canvas>
+    </div><br>
+
+    <h3>❀ breakdown</h3>
+    <div class='twoByTwo flowers'>
+        <div ng-repeat='player in playerData'>
+            <div ng-class='playerColors[$index]'>
+                <p>{{ player.name }}</p><br>
+                <p>Earnings from flowers: {{ player.flowerWinnings | currency }}</p>
+                <table>
+                    <tr>
+                        <th>How</th>
+                        <th ng-repeat='number in player.flowers[1] track by $index'>
+                            <p ng-if='$index !== 4'>{{ players[$index] }}'s ❀</p>
+                            <p ng-if='$index === 4'>Total ❀</p>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Drew flower</td>
+                        <td ng-repeat='flowers in player.flowers[0] track by $index'>
+                            {{ flowers }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>From hand</td>
+                        <td ng-repeat='flowers in player.flowers[1] track by $index'>
+                            {{ flowers }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">All red ❀</th>
+                        <td colspan="3">{{ player.flowers[2][0] }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="4">All blue ❀</th>
+                        <td colspan="3">{{ player.flowers[2][1] }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div><br>
+    
+    <h3>Choose a 杠 chart</h3>
+    <div style='position: relative; height: 75vh;'>
+        <canvas id='gangWinnings' class='chart' ng-show='gangWinningsChart'></canvas>
+        <canvas id='gangShooters' class='chart' ng-show='gangShootersChart'></canvas>
+        <canvas id='gangTypes' class='chart' ng-show='gangTypesChart'></canvas>
+    </div>
+    <br>
+    <input type='checkbox' ng-model='gangWinningsChart' ng-click='changeGangChart(1)'>Winnings
+    <input type='checkbox' ng-model='gangShootersChart' ng-click='changeGangChart(2)'>Shooters
+    <input type='checkbox' ng-model='gangTypesChart' ng-click='changeGangChart(3)'>Draws / From hand
+    
+    <h3>
+        🐗<br>
+        Hover over the pie chart to see the stats
+    </h3>
+    <p>
+        Outer ring: total 🐗 winnings<br>
+        Middle ring: total 🐗s taken<br>
+        Inner ring: total 🐗s drawn and total 🐗s from hand<br>
+    </p>
+    <canvas id='animalChart' class='chart'></canvas>
+
+    <h3>Special rounds</h3>
+    <p>Total rounds with no winners: {{ totalDraws }}</p>
+    <p>Total re-shuffles: {{ totalReShuffles }}</p>
+    <div ng-repeat='fail in zhaHu track by $index'>
+        <p ng-if='zhaHu[$index] !== 0'>
+            Bruh... {{ players[$index] }} 詐胡 {{ fail }} times...
+        </p>
+    </div>
+    <div ng-repeat='wow in flowerWins track by $index'>
+        <p ng-if='flowerWins[$index] !== 0'>
+            POGGERS {{ players[$index] }} ❀❀❀❀八仙过海❀❀❀❀ {{ wow }} times!!!
+        </p>
+    </div>
+
+    <button class='backButton' ng-click='goBackMainGame()' ng-show='!gameEnd'>Back</button>
+    <button class='backButton' ng-click='restart()' ng-show='gameEnd'>Restart</button>
+
+</div>

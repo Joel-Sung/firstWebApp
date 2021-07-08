@@ -1,0 +1,96 @@
+<div class='initializeGame-Container'>
+    
+    <div class='newGame-Container' ng-show='newGameStep'>
+        <button ng-click='goNamesStep()'>New Game</button>
+    </div>
+        
+    <div class='names-Container' ng-show='namesStep'>
+        <div class='title'>Enter player names</div><br>
+        <form ng-submit='confirmNames()'>
+            <label>Player 1: <input type='text' ng-model='playersTemp[0]'></label><br><br>
+            <label>Player 2: <input type='text' ng-model='playersTemp[1]'></label><br><br>
+            <label>Player 3: <input type='text' ng-model='playersTemp[2]'></label><br><br>
+            <label>Player 4: <input type='text' ng-model='playersTemp[3]'></label><br><br>
+            <input type='submit' value='Continue'>
+        </form>
+    </div>
+
+    <div class='rollDice-Container' ng-show='rollDiceStep'>
+        <div class='title'>Roll dice</div>
+        <div class='column-Container'>
+            <div class='column' ng-repeat='player in playersTemp track by $index'>
+                {{ player }}<br>
+                <button ng-click='rollDice($index)' ng-disabled='dice[$index].rolled'>Roll dice</button><br><br>
+                <img src='./media/diceRoll.gif' ng-show='dice[$index].rolling'>
+                <p ng-show='dice[$index].rolled'>{{ dice[$index].value }}</p>
+            </div>
+        </div>
+        <button ng-click='goChooseFengStep()' ng-disabled='diceEqual'>Continue</button><br><br>
+        <button ng-click='usePhysicalDice()'>I want to use my own dice</button>
+    </div>
+
+    <div class='chooseFeng-Container' ng-show='chooseFengStep'>
+        <div ng-if='playerTurn !== 4' class='title'>{{ playersTemp[playerTurn] }} turn to choose</div>
+        <div ng-if='playerTurn === 4' class='title'>Press continue</div>
+        <button class='tile' ng-click='getFeng(0)' ng-disabled='clicked[0]'><p>{{ fengs[tiles[0]] }}</p></button>
+        <div>
+            <button class='tile' ng-click='getFeng(1)' ng-disabled='clicked[1]'><p>{{ fengs[tiles[1]] }}</p></button>
+            <button class='tile' ng-click='getFeng(2)' ng-disabled='clicked[2]'><p>{{ fengs[tiles[2]] }}</p></button>
+        </div>
+        <button class='tile' ng-click='getFeng(3)' ng-disabled='clicked[3]'><p>{{ fengs[tiles[3]] }}</p></button><br><br>
+        <button ng-click='goSetTaiStep()' ng-disabled='fengNotChosen'>Continue</button>
+    </div>
+
+    <div class='physicalDice-Container' ng-show='physicalDiceStep'>
+        <h3 class='title'>Set player ordering</h3>
+        东: <input type='text' ng-model='playersTemp[0]'><br><br>
+        南: <input type='text' ng-model='playersTemp[1]'><br><br>
+        西: <input type='text' ng-model='playersTemp[2]'><br><br>
+        北: <input type='text' ng-model='playersTemp[3]'><br><br>
+        <button ng-click='goSetTaiStepV2()'>Continue</button>
+    </div>
+
+    <div class='setTai-Container' ng-show='setTaiStep'>
+        <div class='title'>How much is one 台?</div>
+        <p>$<input type='number' ng-model='tai' currency></p>
+        <table>
+            <tr>
+                <th>Number of 台</th>
+                <th>Cost</th>
+                <th>Shooter pays</th>
+                <th>自摸</th>
+            </tr>
+            <tr>
+                <th>1 台</th>
+                <th>{{ tai | currency }}</th>
+                <th>{{ tai * 4 | currency }}</th>
+                <th>{{ tai * 6 | currency }}</th>
+            </tr>
+            <tr>
+                <th>2 台</th>
+                <th>{{ tai *2 | currency }}</th>
+                <th>{{ tai * 4 *2 | currency }}</th>
+                <th>{{ tai * 6 *2 | currency }}</th>
+            </tr>
+            <tr>
+                <th>3 台</th>
+                <th>{{ tai *2*2 | currency }}</th>
+                <th>{{ tai * 4 *2*2 | currency }}</th>
+                <th>{{ tai * 6 *2*2 | currency }} </th>
+            </tr>
+            <tr>
+                <th>4 台</th>
+                <th>{{ tai *2*2*2 | currency }}</th>
+                <th>{{ tai * 4 *2*2*2 | currency }}</th>
+                <th>{{ tai * 6 *2*2*2 | currency }}</th>
+            </tr>
+            <tr>
+                <th>5/满 台</th>
+                <th>{{ tai *2*2*2*2 | currency }}</th>
+                <th>{{ tai * 4 *2*2*2*2 | currency }}</th>
+                <th>{{ tai * 6 *2*2*2*2 | currency }}</th>
+            </tr>
+        </table><br>
+        <button ng-click='goMainGame()'>Start Game</button>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+    overflow: hidden;
+}
+.main-Container input[type=text] {
+    border: 0.5vmin black solid;
+    border-radius: 10px; 
+    background-color: white;
+    height: 5vh;
+    width: 20vw;
+    font-size: 3vmin;
+    font-weight: bold;
+}
+.main-Container input:focus {
+    outline: none;
+    background-color: turquoise;
+}
+.main-Container input[type=submit] {
+    border: 0.5vmin black solid;
+    border-radius: 20px; 
+    background-color: white;
+    transform: scale(1.5,1.5);
+    font-size: 3vmin;
+    font-weight: bold;
+}
+.main-Container input[type=submit]:hover {
+    background-color: black;
+    color: white;
+}
+.main-Container button {
+    border: 0.5vmin black solid;
+    border-radius: 20px; 
+    background-color: white;
+    font-size: 3vmin;
+    font-weight: bold;
+}
+.main-Container button:hover {
+    background-color: black;
+    color: white;
+}
+.main-Container a {
+    text-decoration: none;
+    color: black;
+    border: 0.5vmin black solid;
+    border-radius: 20px; 
+    background-color: white;
+    font-size: 3vmin;
+    font-weight: bold;
+    transform: scale(1.5,1.5);
+}
+.main-Container a:hover {
+    background-color: black;
+    color: white;
+}

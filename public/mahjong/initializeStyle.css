@@ -1,0 +1,117 @@
+/* ---------- initializeGame-Container ---------- */
+.initializeGame-Container {
+    width: 95.5vw;
+    height: 90vh;
+    background-color: rgb(13, 146, 13);
+    border-top: 5vh burlywood groove;
+    border-bottom: 5vh burlywood ridge;
+    border-left: 5vh burlywood groove;
+    border-right: 5vh burlywood ridge;
+    text-align: center;
+    overflow: hidden;
+    font-weight: bold;
+}
+.initializeGame-Container .title {
+    background-color: beige;
+    text-align: center;
+    min-width: 20vw;
+    margin: 3vh 28vw;
+    font-size: 5vmin;
+}
+/* ---------- newGame-Container ---------- */
+.newGame-Container {
+    margin: 30vh;
+}
+.newGame-Container button {
+    border: 10px black solid;
+    border-radius: 20px; 
+    font-size: 10vmin;
+}
+/* ---------- names-Container ---------- */
+.names-Container {
+    /* margin: 6vh; */
+    overflow-y: auto;
+    font-size: 5vmin;
+    height: 90vh;
+}
+/* ---------- rollDice-Container ---------- */
+.rollDice-Container {
+    /* margin: 6vh; */
+    font-size: 5vmin;
+}
+.column-Container {
+    height: 55vh;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 5vmin;
+}
+.column-Container .column {
+    background-color: lightyellow;
+    flex-grow: 1;
+    margin: 1vw;
+}
+.column-Container .column img {
+    height: 20vmin;
+    width: 20vmin;
+}
+/* ---------- chooseFeng-Container ---------- */
+.chooseFeng-Container {
+    /* margin: 3vh; */
+    font-size: 5vmin;
+}
+.chooseFeng-Container .tile {
+    height: 20vmin;
+    width: 15vmin;
+    border: 5px black solid;
+    background-color: beige;
+    position: relative;
+}
+.chooseFeng-Container .tile p {
+    transform: translate(50%, -120%);
+    font-size: 6vmin;
+    color: black;
+    position: absolute;
+}
+/* ---------- physicalDice-Container ---------- */
+.physicalDice-Container {
+    /* margin: 5vh; */
+    font-size: 5vmin;
+}
+/* ---------- setTai-Container ---------- */
+.setTai-Container {
+    /* margin: 10vh; */
+    font-size: 4.5vmin;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.setTai-Container div {
+    width: 35vw;
+}
+.setTai-Container input[type=number] {
+    border: 3px black solid;
+    border-radius: 10px; 
+    background-color: white;
+    height: 5vh;
+    width: 10vw;
+    font-size: 4.5vmin;
+    font-weight: bold;
+    text-align: center;
+}
+.setTai-Container table {
+    border-collapse: collapse;
+    width: 60vw;
+    transform: translateX(-10);
+}
+.setTai-Container tr, th {
+    border: 2px solid black;
+    text-align: center;
+}
+.setTai-Container tr:nth-child(odd) {
+    background-color: yellow;
+}
+.setTai-Container tr:nth-child(even) {
+    background-color: lightyellow;
+}

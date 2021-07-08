@@ -1,0 +1,125 @@
+<div class='mainGame-Container'>
+
+    <div class='gameDetails'>
+
+        <div class='left'>
+            {{ fengs[tableFeng] }}
+        </div>
+
+        <div class='middle'>
+            Round {{ totalRounds }}
+        </div>
+        
+        <div class='right'>
+            <button ng-click='undo()'>Undo</button>
+            <button ng-click='goStatsPage()'>Stats</button>
+        </div>
+
+    </div>
+
+    <div class='specialRounds'>
+        <button ng-click='noWinner()'>No winners</button>
+        <button ng-click='reShuffle()'>Re-shuffle</button>
+    </div>
+
+    <div class='gameInteractions'>
+    
+        <div ng-repeat='player in playerData track by $index'>
+
+            <div class='column'  ng-class='playerColors[$index]'>
+                <div class='playerData'>
+                    {{ player.name }}
+                    <div class='colorButton main'>
+                        <button ng-click='chooseColor($index)' class='colorButton' 
+                            ng-class='"strong" + playerColors[$index]' ng-show='!showColors[$index]'></button>
+                    </div>
+                    
+                    <div class='colorList' ng-show='showColors[$index]'>
+                        <div ng-repeat='color in colors'>
+                            <button class='colorButton' ng-class='strongColors[$index]' ng-if='color !== playerColors[$parent.$index]'
+                                ng-click='confirmColor($parent.$parent.$index, $index)'></button>
+                            <input type='button' value='✓' class='colorButton yourColor' ng-class='strongColors[$index]' ng-if='color === playerColors[$parent.$index]'
+                                ng-click='confirmColor($parent.$parent.$index, $index)'>
+                        </div>
+                    </div>
+                    <br><br>
+                    <div ng-if='$index !== zhuang'>{{ fengs[player.currentFeng] }}<br><br></div>
+                    <div ng-if='$index === zhuang' ng-class='"strong" + playerColors[$index]' class='fengTurn'>{{ fengs[player.currentFeng] }}<br><br></div>
+                    {{ player.net | currency }}<br><br>
+                    <div ng-repeat='flower in player.flowersTaken | orderBy'>
+                        {{ flower }}❀
+                    </div><br>
+                    <div ng-if='player.redBlueFlowers[0]'>All red ❀</div>
+                    <div ng-if='player.redBlueFlowers[1]'>All blue ❀</div><br>
+                    <div ng-if='player.animalsTaken > 0'>🐗 x{{ player.animalsTaken }}</div>
+                    </div>
+
+                <div class='playerActions'>
+                    <div ng-show='player.default'>
+                        <button ng-click='getWin($index)' ng-disabled='action'>Win</button><br><br>
+                        <button ng-click='getFlower($index)' ng-disabled='action || !player.flowerButton'>❀</button><br><br>
+                        <button ng-click='getGang($index)' ng-disabled='action'>杠</button><br><br>
+                        <button ng-click='getAnimal($index)' ng-disabled='action || noMoreAnimals'>🐗</button><br><br>
+                        <button ng-click='getZhaHu($index)' ng-disabled='action'>詐胡</button>
+                    </div>
+
+                    <div>
+                        <div ng-show='player.chooseTai'>
+                            Amount of 台 won<br>
+                            <button ng-click='getShooter($index, 1)'>1</button><br><br>
+                            <button ng-click='getShooter($index, 2)'>2</button><br><br>
+                            <button ng-click='getShooter($index, 3)'>3</button><br><br>
+                            <button ng-click='getShooter($index, 4)'>4</button><br><br>
+                            <button ng-click='getShooter($index, 5)'>5/满</button><br><br>
+                            <button ng-click='goDefault($index)'>Cancel</button>
+                        </div>
+                        <div ng-show='player.chooseShooter'>
+                            Who's the shooter<br>
+                            <div ng-repeat='player in players'>
+                                <button ng-click='confirmWin($parent.$parent.$index, $index)' ng-if='$parent.$index !== $index'>{{ player }}</button>
+                                <button ng-click='confirmWin($parent.$parent.$index, $index)' ng-if='$parent.$index === $index'>自摸</button>
+                                <br><br>
+                            </div>
+                            <button ng-click='goDefault($index)'>Cancel</button>
+                        </div>
+                    </div>
+
+                    <div ng-show='player.flower'>
+                        Whose ❀<br>
+                        <div ng-repeat='p in players'>
+                            <button ng-click='confirmFlower($parent.$parent.$index, $index)' ng-if='$parent.$index !== $index' 
+                                ng-disabled='!player.flowersAvailable[$index]'>{{ p }}</button>
+                            <button ng-click='confirmFlower($parent.$parent.$index, $index)' ng-if='$parent.$index === $index'
+                                ng-disabled='!player.flowersAvailable[$index]'>Own ❀</button>
+                            <br><br>
+                        </div>
+                        <input type='checkbox' ng-model='fromHand' ng-click='changeFromHand()'>From hand<br><br>
+                        <button ng-click='confirmFlower($index, "all red")' ng-disabled='!player.flowersAvailable[4]'>All Red ❀s</button><br><br>
+                        <button ng-click='confirmFlower($index, "all blue")' ng-disabled='!player.flowersAvailable[5]'>All Blue ❀s</button><br><br>
+                        <button ng-click='goDefault($index)'>Cancel</button>
+                    </div>
+
+                    <div ng-show='player.gang'>
+                        Who's the shooter<br>
+                        <div ng-repeat='player in players | filterOwnIndex:$index'>
+                            <button ng-click='confirmGang($parent.$index, $index)'>{{ player }}</button><br><br>
+                        </div>
+                        <button ng-click='confirmGang($index, "draw after pong")'>Draw after 碰</button><br><br>
+                        <button ng-click='confirmGang($index, "from hand")'>From hand</button><br><br>
+                        <button ng-click='goDefault($index)'>Cancel</button>
+                    </div>
+
+                    <div ng-show='player.animal'>
+                        Drew or from hand<br>
+                        <button ng-click='confirmAnimal($index, "draw")'>Drew Animal</button><br><br>
+                        <button ng-click='confirmAnimal($index, "from hand")'>From hand</button><br><br>
+                        <button ng-click='goDefault($index)'>Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+                
+    </div>
+    
+</div>

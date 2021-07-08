@@ -1,0 +1,201 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgrey;
+    overflow: hidden;
+    margin: 0;
+
+    font-family: 'Lucida Handwriting';
+    font-size: 12px;
+}
+.main-Container {
+    text-align: center;
+    border-left: 5vw groove burlywood ;
+    border-right: 5vw ridge burlywood ;
+    height: 100vh;
+    width: 100%;
+    background-color: white;
+    overflow-y: hidden;
+
+    font-weight: bold;
+    font-size: medium;
+}
+.main-Container p {
+    display: inline;
+}
+.main-Container input {
+    border: 2px black solid;
+    border-radius: 5px; 
+
+    font-family: 'Lucida Handwriting';
+    font-size: large;
+}
+.main-Container button {
+    border: 3px black solid;
+    border-radius: 10px; 
+    background-color: white;
+
+    font-weight: bold;
+    font-size: medium;
+}
+.main-Container button:hover {
+    border-radius: 20px; 
+    background-color: black;
+    color: white;
+    font-weight: bold;
+}
+.event-Container,
+.participants-Container,
+.modes-Container,
+.totalBillMode-Container,
+.totalBillFinal-Container,
+.itemsBoughtMode-Container,
+.splitItems-Container,
+.splitItemsAddOns-Container,
+.splitItemsFinal-Container {
+    margin: 3vh
+}
+.list {
+    overflow-y: auto;
+    max-height: 50vh;
+}
+/* ---------- event-Container ---------- */
+.event-Container {
+    font-size: 4vw;
+}
+.event-Container p {
+    font-size: 1vw;
+}
+.event-Container input {
+    width: 30vw;
+    text-align: center;
+    height: 10vmin;
+}
+/* ---------- participants-Container ---------- */
+.participants-Container {
+    margin-top: 7%;
+    font-size: 30px;
+}
+.participants-Container input {
+    text-align: center;
+}
+/* ---------- modes-Container ---------- */
+.modes-Container {
+    margin-top: 12%;
+    font-size: 40px;
+}
+.modes-Container button {
+    font-size: 40px;
+}
+/* ---------- totalBillMode-Container ---------- */
+.totalBillMode-Container {
+    margin-top: 12%;
+    font-size: 40px;
+}
+.totalBillMode-Container input {
+    text-align: center;
+}
+.totalBillMode-Container input[type=checkbox] {
+    transform: scale(2);
+}
+/* ---------- totalBillFinal-Container ---------- */
+.totalBillFinal-Container {
+    margin-top: 4%;
+    font-size: 20px;
+}
+/* ---------- itemsBoughtMode-Container ---------- */
+.itemsBoughtMode-Container {
+    margin-top: 7%;
+    font-size: 20px;
+    overflow-y: auto;
+
+    max-height: 80vh;
+}
+.itemsBoughtMode-Container table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 0 15vw;
+}
+.itemsBoughtMode-Container td, th {
+    border: 2px solid black;
+    text-align: left;
+}
+.itemsBoughtMode-Container td input {
+    width: 80%;
+}
+.itemsBoughtMode-Container tr:nth-child(odd) {
+    background-color: darkgray;
+}
+.itemsBoughtMode-Container tr:nth-child(even) {
+    background-color: lightgray;
+}
+/* ---------- splitItems-Container ---------- */
+.splitItems-Container {
+    margin-top: 6%;
+    font-size: 20px;
+    overflow-y: auto;
+    min-height: 70vh;
+    max-height: 80vh;
+}
+.splitItems-Container table {
+    border-collapse: collapse;
+    width: 70%;
+    margin: 0 15vw;
+}
+.splitItems-Container td, th {
+    border: 2px solid black;
+    text-align: left;
+}
+.splitItems-Container td input {
+    width: 90%;
+}
+.splitItems-Container th {
+    background-color: darkgray;
+}
+.splitItems-Container tr:nth-child(odd) {
+    background-color: darkgray;
+}
+.splitItems-Container tr:nth-child(even) {
+    background-color: lightgray;
+}
+.searchBar {
+    position: relative;
+}
+.dropDown {
+    position: absolute;
+    background-color: lightgray;
+    width: 90%;
+    margin: 0;
+}
+.dropDown ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.dropDown li {
+    background-color: white;
+}
+.dropDown li:hover {
+    background-color: black;
+    color: white;
+}
+/* ---------- splitItemsAddOns-Container ---------- */
+.splitItemsAddOns-Container {
+    margin-top: 10%;
+    font-size: 30px;
+}
+.splitItemsAddOns-Container input {
+    text-align: center;
+}
+.splitItemsAddOns-Container input[type=checkbox] {
+    transform: scale(2);
+}
+/* ---------- splitItemsFinal-Container ---------- */
+.splitItemsFinal-Container {
+    margin-top: 6%;
+    font-size: 20px;
+    overflow-y: auto;
+
+    max-height: 80vh;
+}

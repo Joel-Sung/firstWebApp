@@ -1,0 +1,90 @@
+/* ---------- statsPage-Container ---------- */
+.statsPage-Container {
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-size: 3vmin;
+    font-weight: bold;
+    background-color: white;
+}
+.statsPage-Container h3 {
+    background-color: beige;
+}
+/* ---------- chart ---------- */
+.statsPage-Container .chart {
+    max-width: 70%;
+    margin-left: 15vw;
+}
+/* ---------- wins ---------- */
+
+/* ---------- totalDiaoZheng ---------- */
+.statsPage-Container .totalDiaoZheng {
+    position: absolute;
+    z-index: 1000;
+    transform: translate(44.7vw, -54vh);
+    font-size: 4vw;
+    text-align: center;
+}
+/* ---------- flowerCharts ---------- */
+.statsPage-Container .flowerCharts {
+    width: 70vw;
+    margin-left: 15vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.statsPage-Container .flowerCharts .chart {
+    max-width: 35vw;
+    height: 35vh;
+    margin-left: 0;
+}
+.statsPage-Container .flowerCharts .canvas {
+    display: inline;
+}
+/* ---------- flowers ---------- */
+.statsPage-Container .twoByTwo.flowers table {
+    font-size: 2vmin;
+}
+.statsPage-Container .twoByTwo.flowers div {
+    height: 35vh;
+}
+/* ---------- backButton ---------- */
+.backButton {
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+/* ---------- general ---------- */
+.statsPage-Container .twoByTwo {
+    width: 70vw;
+    margin-left: 15vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: beige;
+}
+.statsPage-Container .twoByTwo div {
+    width: 35vw;
+    height: 35vh;
+}
+.statsPage-Container .twoByTwo p {
+    display: inline;
+}
+.statsPage-Container .twoByTwo table {
+    border-collapse: collapse;
+    width: 30vw;
+    font-size: 3vmin;
+    transform: translateX(2.5vw);
+}
+.statsPage-Container .twoByTwo td, th {
+    border: 2px solid black;
+    text-align: center;
+}
+.statsPage-Container .twoByTwo th {
+    background-color: darkgray;
+}
+.statsPage-Container .twoByTwo td {
+    background-color: lightgray;
+}
