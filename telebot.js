@@ -1,6 +1,6 @@
 var { Telegraf } = require('telegraf');
 var setup = require('./public/setup.js');
-var bot = new Telegraf('1847366451:AAGVcqcyAg9KDIanTJo8cxEfU6DzGTHWpbA');
+var bot = new Telegraf(/* insert telegram bot token here */);
 module.exports.bot = bot;
 
 var fs = require('fs');
